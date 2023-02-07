@@ -1,3 +1,6 @@
+require('dotenv').config();
+const process = require('process');
+const debug = require('debug');
 const apiKey = "YOUR_API_KEY";
 const URL = "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=YOUR_API_KEY&page=1";
 const imgURL = "https://image.tmdb.org/t/p/w1280";
@@ -8,7 +11,19 @@ const root = document.getElementById("root");
 let movies = [],
     page = 1,
     inSearchPage = false;
+// app.js
 
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+  }
+  
+  const app = require('http').createServer((req, res) => res.send('Ahoy!'));
+  const PORT = process.env.PORT || 4000;
+  
+  app.listen(PORT, () => {
+    console.log(`Server is listening on port: ${PORT}`);
+  });
+  
 // Fetch json data from URL
 async function fetchData(URL) {
     try {
